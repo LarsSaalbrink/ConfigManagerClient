@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./Device.module.css";
-import { configOptionsLUT } from "../options_LUT.tsx";
+import { configOptionsLUT } from "../configs/options_LUT";
 
 export type Device_data = {
     serial_number: string;
