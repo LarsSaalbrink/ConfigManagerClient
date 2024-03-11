@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { Device, Device_data } from "./Device";
 import { Device_selector, Config } from "./Device_selector";
+import { config_context } from "./config_context";
+import { current_device_context } from "./current_device_context";
 import styles from "./App.module.css";
 import default_config_json from "./assets/default_config.json";
 import logo from "../public/gobe_logo.webp";
 
 function App() {
     const [config, setConfig] = useState<Config>(default_config_json);
-    const [currentDevice, setCurrentDevice] = useState<Device_data | null>(
+    const [current_device, setCurrentDevice] = useState<Device_data | null>(
         null
     );
 
@@ -17,29 +19,12 @@ function App() {
     }, []);
 
     useEffect(() => {
-        console.log("currentDevice updated");
-    }, [currentDevice]);
+        console.log("current_device updated");
+    }, [current_device]);
 
     useEffect(() => {
         console.log("Config updated");
     }, [config]);
-
-    // Function to handle selection menu button click
-    const handleClick = (serialNumber: string) => {
-        console.log("App: handleClick");
-
-        const device = config.devices.find(
-            (device) => device.serial_number === serialNumber
-        );
-        if (device) {
-            setCurrentDevice(device);
-            console.log(`Device with serial number ${serialNumber} selected`);
-        } else {
-            console.error(
-                `Device with serial number ${serialNumber} not found`
-            );
-        }
-    };
 
     const handle_change_input = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log("App: handleFieldChange");
@@ -47,7 +32,7 @@ function App() {
         // Update the config with the new value
         const newConfig = { ...config };
         const device = newConfig.devices.find(
-            (device) => device.serial_number === currentDevice?.serial_number
+            (device) => device.serial_number === current_device?.serial_number
         );
 
         if (device) {
@@ -66,7 +51,7 @@ function App() {
             setConfig(newConfig);
         } else {
             console.error(
-                `Device with serial number ${currentDevice?.serial_number} not found`
+                `Device with serial number ${current_device?.serial_number} not found`
             );
         }
     };
@@ -77,49 +62,54 @@ function App() {
         // Update the config with the new value
         const newConfig = { ...config };
         const device = newConfig.devices.find(
-            (device) => device.serial_number === currentDevice?.serial_number
+            (device) => device.serial_number === current_device?.serial_number
         );
         if (device) {
             device.config[e.target.name] = e.target.value;
             setConfig(newConfig);
         } else {
             console.error(
-                `Device with serial number ${currentDevice?.serial_number} not found`
+                `Device with serial number ${current_device?.serial_number} not found`
             );
         }
     };
 
     // Render current device
     return (
-        <div className={styles.appContainer}>
-            <div className={styles.titleContainer}>
-                <div className={styles.title}>
-                    <b>Config Manager</b>
-                </div>
-                <div className={styles.serverpanel}></div>
-                <div className={styles.logobox}>
-                    <img src={logo}></img>
-                </div>
-            </div>
+        <current_device_context.Provider
+            value={{ current_device, setCurrentDevice }}
+        >
+            <config_context.Provider value={{ config, setConfig }}>
+                <div className={styles.appContainer}>
+                    <div className={styles.titleContainer}>
+                        <div className={styles.title}>
+                            <b>Config Manager</b>
+                        </div>
+                        <div className={styles.serverpanel}></div>
+                        <div className={styles.logobox}>
+                            <img src={logo}></img>
+                        </div>
+                    </div>
 
-            <div className={styles.selectorContainer}>
-                <Device_selector
-                    devices_arr={config.devices}
-                    parent_handle_selectionClick={handleClick}
-                />
-            </div>
+                    <div className={styles.selectorContainer}>
+                        <Device_selector />
+                    </div>
 
-            <div className={styles.deviceContainer}>
-                {currentDevice && (
-                    <Device
-                        key={currentDevice.serial_number}
-                        device_json={currentDevice}
-                        parent_handle_change_input={handle_change_input}
-                        parent_handle_change_select={handle_change_select}
-                    />
-                )}
-            </div>
-        </div>
+                    <div className={styles.deviceContainer}>
+                        {current_device && (
+                            <Device
+                                key={current_device.serial_number}
+                                device_json={current_device}
+                                parent_handle_change_input={handle_change_input}
+                                parent_handle_change_select={
+                                    handle_change_select
+                                }
+                            />
+                        )}
+                    </div>
+                </div>
+            </config_context.Provider>
+        </current_device_context.Provider>
     );
 }
 
