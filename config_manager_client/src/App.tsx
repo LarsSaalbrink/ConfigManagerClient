@@ -3,6 +3,7 @@ import { Device, Device_data } from "./Device";
 import { Device_selector, Config } from "./Device_selector";
 import styles from "./App.module.css";
 import default_config_json from "./assets/default_config.json";
+import logo from "../public/gobe_logo.webp";
 
 function App() {
     const [config, setConfig] = useState<Config>(default_config_json);
@@ -61,12 +62,23 @@ function App() {
     // Render current device
     return (
         <div className={styles.appContainer}>
+            <div className={styles.titleContainer}>
+                <div className={styles.title}>
+                    <b>Config Manager</b>
+                </div>
+                <div className={styles.serverpanel}></div>
+                <div className={styles.logobox}>
+                    <img src={logo}></img>
+                </div>
+            </div>
+
             <div className={styles.selectorContainer}>
                 <Device_selector
                     devices_arr={config.devices}
                     parent_handle_selectionClick={handleClick}
                 />
             </div>
+
             <div className={styles.deviceContainer}>
                 {currentDevice && (
                     <Device
