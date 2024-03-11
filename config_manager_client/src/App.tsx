@@ -41,7 +41,37 @@ function App() {
         }
     };
 
-    const handle_field_change = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handle_change_input = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("App: handleFieldChange");
+
+        // Update the config with the new value
+        const newConfig = { ...config };
+        const device = newConfig.devices.find(
+            (device) => device.serial_number === currentDevice?.serial_number
+        );
+
+        if (device) {
+            let value: string | number | boolean = e.target.value;
+
+            // Handle checkboxes
+            if (e.target.type === "checkbox") {
+                value = e.target.checked;
+            }
+            // Handle numbers
+            else if (!isNaN(Number(value))) {
+                value = Number(value);
+            }
+
+            device.config[e.target.name] = value;
+            setConfig(newConfig);
+        } else {
+            console.error(
+                `Device with serial number ${currentDevice?.serial_number} not found`
+            );
+        }
+    };
+
+    const handle_change_select = (e: React.ChangeEvent<HTMLSelectElement>) => {
         console.log("App: handleFieldChange");
 
         // Update the config with the new value
@@ -84,7 +114,8 @@ function App() {
                     <Device
                         key={currentDevice.serial_number}
                         device_json={currentDevice}
-                        parent_handle_change={handle_field_change}
+                        parent_handle_change_input={handle_change_input}
+                        parent_handle_change_select={handle_change_select}
                     />
                 )}
             </div>
