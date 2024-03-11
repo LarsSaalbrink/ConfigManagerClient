@@ -7,7 +7,8 @@
         "dev": "vite",
         "build": "tsc && vite build && node postbuild.js",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-        "test": "jest"
+        "test": "jest",
+        "git_commit": "tsc && vite build && node postbuild.js && node git_commit.js"
     },
     "dependencies": {
         "react": "^18.2.0",
