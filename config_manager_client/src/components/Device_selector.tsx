@@ -11,8 +11,6 @@ export type Config = {
     diagnostics_server: string;
 };
 
-function select_device(device: Device_data) {}
-
 export function Device_selector() {
     // Shared config state
     const context = useContext(config_context);
