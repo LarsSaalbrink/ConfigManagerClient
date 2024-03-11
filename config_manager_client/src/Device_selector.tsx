@@ -28,6 +28,9 @@ export function Device_selector({
     // Scrollable vertical container with row for each device serial number
     return (
         <div className={styles.deviceSelector}>
+            <div className={styles.title}>
+                <b>Devices</b>
+            </div>
             {devices.map((device) => (
                 <input
                     type="button"
@@ -38,6 +41,14 @@ export function Device_selector({
                     }}
                 />
             ))}
+            <input
+                type="button"
+                value="-New-"
+                key="add_device"
+                onClick={() => {
+                    console.log("Add Device");
+                }}
+            />
         </div>
     );
 }

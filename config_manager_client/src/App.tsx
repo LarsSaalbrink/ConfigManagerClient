@@ -60,8 +60,8 @@ function App() {
 
     // Render current device
     return (
-        <>
-            <div>
+        <div className={styles.appContainer}>
+            <div className={styles.selectorContainer}>
                 <Device_selector
                     devices_arr={config.devices}
                     parent_handle_selectionClick={handleClick}
@@ -76,7 +76,7 @@ function App() {
                     />
                 )}
             </div>
-        </>
+        </div>
     );
 }
 

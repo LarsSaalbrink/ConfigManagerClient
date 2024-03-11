@@ -1,0 +1,30 @@
+.appContainer {
+}
+
+.selectorContainer {
+    position: absolute;
+    left: 0;
+    width: 20%;
+    top: 10%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    background-color: white;
+    border: 4px solid black;
+}
+
+.deviceContainer {
+    position: absolute;
+    left: 20%;
+    width: 80%;
+    top: 10%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+    border: 4px solid black;
+}
