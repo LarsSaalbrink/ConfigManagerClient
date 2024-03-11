@@ -1,30 +1,50 @@
 import { useState } from "react";
-import { useEffect } from "react";
 import { Device, Device_data } from "./Device";
+import { Device_selector, Config } from "./Device_selector";
 import styles from "./App.module.css";
 import default_config_json from "./assets/default_config.json";
 
 function App() {
-    const [devices, setDevices] = useState<Device_data[]>([]);
+    const [config, setConfig] = useState<Config>(default_config_json);
     const [currentDevice, setCurrentDevice] = useState<Device_data | null>(
         null
     );
 
-    useEffect(() => {
-        // Hook to run once on component mount
-        setDevices(default_config_json.devices);
-    }, []);
+    // Placeholder for fileparser
+    setConfig(default_config_json);
 
-    // Set current device to index 0
-    useEffect(() => {
-        setCurrentDevice(devices[0]);
-    }, [devices]);
+    // Function to handle button click
+    const handleClick = (serialNumber: string) => {
+        const device = config.devices.find(
+            (device) => device.serial_number === serialNumber
+        );
+        if (device) {
+            setCurrentDevice(device);
+            //Log the device serial number
+            console.log(`Device with serial number ${serialNumber} selected`);
+        } else {
+            console.error(
+                `Device with serial number ${serialNumber} not found`
+            );
+        }
+    };
 
     // Render current device
     return (
         <>
+            <div>
+                <Device_selector
+                    devices_arr={config.devices}
+                    selectionClick={handleClick}
+                />
+            </div>
             <div className={styles.deviceContainer}>
-                {currentDevice && <Device {...currentDevice} />}
+                {currentDevice && (
+                    <Device
+                        key={currentDevice.serial_number}
+                        {...currentDevice}
+                    />
+                )}
             </div>
         </>
     );
