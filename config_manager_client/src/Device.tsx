@@ -6,10 +6,15 @@ export type Device_data = {
     config: Record<string, any>;
 };
 
-export function Device(device_json: Device_data) {
+type DeviceArgs = {
+    device_json: Device_data;
+    parent_handle_change: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+export function Device({ device_json, parent_handle_change }: DeviceArgs) {
     const [formData, set_Device_data] = useState<Device_data>(device_json);
 
-    const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handle_field_change = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("Device: handleFieldChange");
         set_Device_data({
             ...formData,
             config: {
@@ -17,6 +22,7 @@ export function Device(device_json: Device_data) {
                 [e.target.name]: e.target.value,
             },
         });
+        parent_handle_change(e);
     };
 
     return (
@@ -31,7 +37,7 @@ export function Device(device_json: Device_data) {
                                 type="text"
                                 name={field}
                                 value={formData.config[field] || ""}
-                                onChange={handleFieldChange}
+                                onChange={handle_field_change}
                             />
                         </div>
                     ))}

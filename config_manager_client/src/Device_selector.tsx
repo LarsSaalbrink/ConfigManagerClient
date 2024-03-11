@@ -11,11 +11,11 @@ export type Config = {
 
 type DeviceSelectorArgs = {
     devices_arr: Device_data[];
-    selectionClick: (serialNumber: string) => void;
+    parent_handle_selectionClick: (serialNumber: string) => void;
 };
 export function Device_selector({
     devices_arr,
-    selectionClick,
+    parent_handle_selectionClick,
 }: DeviceSelectorArgs) {
     // State containing all devices
     const [devices, setDevices] = useState<Device_data[]>(devices_arr);
@@ -34,7 +34,7 @@ export function Device_selector({
                     value={device.serial_number}
                     key={device.serial_number}
                     onClick={() => {
-                        selectionClick(device.serial_number);
+                        parent_handle_selectionClick(device.serial_number);
                     }}
                 />
             ))}
