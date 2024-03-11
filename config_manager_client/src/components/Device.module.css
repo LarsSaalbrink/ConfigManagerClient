@@ -1,0 +1,23 @@
+.device {
+    left: 0;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.delete_btn {
+    position: absolute;
+    top: 0;
+    right: 0%;
+    height: 10%;
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2%;
+}
