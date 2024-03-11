@@ -1,0 +1,41 @@
+{
+    "devices": [
+        {
+            "serial_number": "001",
+            "config": {
+                "should_light_be_on": true,
+                "max_speed": 0.73,
+                "mode": "race_car",
+                "log_level": "debug"
+            }
+        },
+        {
+            "serial_number": "002",
+            "config": {
+                "should_light_be_on": false,
+                "max_speed": 0.47,
+                "mode": "sports_car",
+                "log_level": "warning"
+            }
+        },
+        {
+            "serial_number": "023",
+            "config": {
+                "should_light_be_on": true,
+                "max_speed": 1.00,
+                "mode": "spaceship",
+                "log_level": "info"
+            }
+        },
+        {
+            "serial_number": "123",
+            "config": {
+                "should_light_be_on": true,
+                "max_speed": 0.13,
+                "mode": "bike",
+                "log_level": "debug"
+            }
+        }
+    ],
+    "diagnostics_server": "diagnostics.example.com"
+}
