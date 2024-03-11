@@ -11,6 +11,8 @@ export type Config = {
     diagnostics_server: string;
 };
 
+function select_device(device: Device_data) {}
+
 export function Device_selector() {
     // Shared config state
     const context = useContext(config_context);
@@ -64,6 +66,12 @@ export function Device_selector() {
                     type="button"
                     value={device.serial_number}
                     key={device.serial_number}
+                    className={
+                        // Highlight selected device
+                        device.serial_number === _current_device?.serial_number
+                            ? "selected_device"
+                            : ""
+                    }
                     onClick={() => {
                         handleClick(device.serial_number);
                     }}
