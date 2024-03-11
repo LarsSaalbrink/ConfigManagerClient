@@ -1,4 +1,4 @@
-import { Device_data } from "./Device";
+import { Device_data } from "../components/Device";
 import { createContext, Dispatch, SetStateAction } from "react";
 
 export const current_device_context = createContext<{

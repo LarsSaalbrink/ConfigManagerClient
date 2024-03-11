@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { Device_data } from "./Device";
-import { config_context } from "./config_context";
-import { current_device_context } from "./current_device_context";
+import { config_context } from "../contexts/config_context";
+import { current_device_context } from "../contexts/current_device_context";
 import styles from "./Device_selector.module.css";
 
 // Temporary placement, should be declared by fileparser

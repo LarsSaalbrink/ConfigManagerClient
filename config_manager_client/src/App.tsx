@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Device, Device_data } from "./Device";
-import { Device_selector, Config } from "./Device_selector";
-import { config_context } from "./config_context";
-import { current_device_context } from "./current_device_context";
+import { Device, Device_data } from "./components/Device";
+import { Device_selector, Config } from "./components/Device_selector";
+import { config_context } from "./contexts/config_context";
+import { current_device_context } from "./contexts/current_device_context";
 import styles from "./App.module.css";
 import default_config_json from "./assets/default_config.json";
 import logo from "../public/gobe_logo.webp";
