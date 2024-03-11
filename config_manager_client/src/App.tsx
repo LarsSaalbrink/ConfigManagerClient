@@ -6,19 +6,27 @@ import default_config_json from "./assets/default_config.json";
 
 function App() {
     const [devices, setDevices] = useState<Device_data[]>([]);
+    const [currentDevice, setCurrentDevice] = useState<Device_data | null>(
+        null
+    );
 
     useEffect(() => {
         // Hook to run once on component mount
         setDevices(default_config_json.devices);
     }, []);
 
-    // Render devices
+    // Set current device to index 0
+    useEffect(() => {
+        setCurrentDevice(devices[0]);
+    }, [devices]);
+
+    // Render current device
     return (
-        <div className={styles.appContainer}>
-            {[...Array(devices.length)].map((_, i) => (
-                <Device key={i} {...devices[i]} />
-            ))}
-        </div>
+        <>
+            <div className={styles.deviceContainer}>
+                {currentDevice && <Device {...currentDevice} />}
+            </div>
+        </>
     );
 }
 
