@@ -3,6 +3,7 @@ import { Device, Device_data } from "./components/Device";
 import { Device_selector, Config } from "./components/Device_selector";
 import { current_config_context } from "./contexts/config_context";
 import { current_device_context } from "./contexts/current_device_context";
+import { configOptionsLUT } from "./configs/options_LUT";
 import styles from "./App.module.css";
 import default_config_json from "./assets/default_config.json";
 import logo from "../public/gobe_logo.webp";
@@ -16,6 +17,7 @@ function App() {
     useEffect(() => {
         //On load
         setConfig(default_config_json); // Placeholder for fileparser
+        add_field(config.devices[0], "boolean", "new_field");
     }, []);
 
     useEffect(() => {
@@ -25,6 +27,43 @@ function App() {
     useEffect(() => {
         console.log("Config updated");
     }, [config]);
+
+    // Add a new parameter to specified device
+    const add_field = (
+        device: Device_data,
+        type: string,
+        field_name: string,
+        options?: string[]
+    ) => {
+        console.log("App: add_field");
+
+        const newConfig = { ...config };
+        const device_index = newConfig.devices.findIndex(
+            (d) => d.serial_number === device.serial_number
+        );
+
+        if (device_index !== -1) {
+            const device = newConfig.devices[device_index];
+            if (device) {
+                if (type === "selection" && options) {
+                    device.config[field_name] = options[0];
+                    configOptionsLUT.set(field_name, options); // Add options to LUT
+                } else if (type === "numeric") {
+                    device.config[field_name] = 0;
+                } else if (type === "boolean") {
+                    device.config[field_name] = false;
+                } else {
+                    alert("Invalid type for new field");
+                }
+            }
+        } else {
+            console.error(
+                `Device with serial number ${device.serial_number} not found`
+            );
+        }
+
+        setConfig(newConfig);
+    };
 
     const handle_change_input = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log("App: handleFieldChange");
