@@ -5,6 +5,7 @@ import { Trashbin } from "./Trashbin";
 import { current_device_context } from "../contexts/current_device_context";
 import { current_config_context } from "../contexts/config_context";
 import MultiLayerTooltip from "./Btn_w_tooltips";
+import { field_options } from "../configs/add_field";
 
 export type Device_data = {
     serial_number: string;
@@ -182,42 +183,7 @@ export function Device({
                     );
                 })}
             </form>
-            <MultiLayerTooltip
-                tooltips={[
-                    {
-                        tooltip: {
-                            text: "lvl1_num1",
-                            children: [
-                                {
-                                    tooltip: {
-                                        text: "lvl2_num1",
-                                        children: [
-                                            {
-                                                tooltip: {
-                                                    text: "lvl3_num1",
-                                                    children: [],
-                                                },
-                                            },
-                                        ],
-                                    },
-                                },
-                                {
-                                    tooltip: {
-                                        text: "lvl2_num2",
-                                        children: [],
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        tooltip: {
-                            text: "lvl1_num2",
-                            children: [],
-                        },
-                    },
-                ]}
-            />
+            <MultiLayerTooltip tooltips={field_options} />
         </div>
     );
 }

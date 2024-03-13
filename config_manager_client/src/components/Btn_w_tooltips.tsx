@@ -28,18 +28,36 @@ const Tooltip: React.FC<TooltipProps & { visible: boolean }> = ({
         <div
             className={`${styles.tooltip} ${visible ? styles.visible : ""}`}
             style={{ left: level === 0 ? "0px" : "104px" }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
         >
-            {tooltip.text}
-            {tooltip.children.map((child, index) => (
-                <Tooltip
-                    key={index}
-                    tooltip={child.tooltip}
-                    visible={childVisible}
-                    level={level + 1}
-                />
-            ))}
+            {" "}
+            <div
+                style={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+                {tooltip.children.map((child, index) => (
+                    <Tooltip
+                        key={index}
+                        tooltip={child.tooltip}
+                        visible={childVisible}
+                        level={level + 1}
+                    />
+                ))}
+            </div>
+            <div
+                style={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                dangerouslySetInnerHTML={{ __html: tooltip.text }}
+            />
         </div>
     );
 };
