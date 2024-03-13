@@ -24,7 +24,7 @@ Once finished, folder _config_manager_client/\_build/\_electron/_ will contain a
 Run commands "_npm install_" and "_npm run build_" from _config_manager_client/_  
 This will save both a plaintext singlepage .html file and a gzipped version (suitable for hosting to remote clients) of the plaintext to directory _config_manager_client/build/_
 
-### Webbrowser application
+### Electron application
 
 Run commands "_npm install_" and "_npm run build_electron_" from _config_manager_client/_.
 This will build an Electron.js based application for your OS.
