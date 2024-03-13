@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Device_data } from "./Device";
 import { current_config_context } from "../contexts/config_context";
 import { current_device_context } from "../contexts/current_device_context";
@@ -30,6 +30,8 @@ export function Device_selector() {
     }
     const { current_device: _current_device, setCurrentDevice } =
         device_context;
+
+    const [serial_number, set_serial_number] = useState("1");
 
     // Update state when config changes
     useEffect(() => {
@@ -73,50 +75,57 @@ export function Device_selector() {
                     }}
                 />
             ))}
-            <input
-                type="button"
-                value="-New-"
-                key="add_device"
-                onClick={() => {
-                    let number: any = null;
+            <div className={styles.add_device_container}>
+                <input
+                    type="button"
+                    value="-New-"
+                    key="add_device"
+                    onClick={() => {
+                        let number: any = serial_number;
 
-                    number = window.prompt("Serial number for new device");
+                        if (number !== null) {
+                            //check for duplicate serial number
+                            if (
+                                config.devices.find(
+                                    (device) => device.serial_number === number
+                                )
+                            ) {
+                                window.alert("Serial number already exists");
+                                number = null;
+                            }
+                            if (number < 0) {
+                                window.alert(
+                                    "Serial number cannot be negative"
+                                );
+                                number = null;
+                            }
+                            if (isNaN(Number(number))) {
+                                window.alert("Serial number must be a number");
+                                number = null;
+                            }
+                        }
 
-                    if (number !== null) {
-                        //check for duplicate serial number
-                        if (
-                            config.devices.find(
-                                (device) => device.serial_number === number
-                            )
-                        ) {
-                            window.alert("Serial number already exists");
-                            number = null;
+                        if (number !== null && number !== "") {
+                            // Add new device to config
+                            setConfig({
+                                ...config,
+                                devices: [
+                                    ...config.devices,
+                                    {
+                                        serial_number: number,
+                                        config: device_baseline,
+                                    },
+                                ],
+                            });
                         }
-                        if (number < 0) {
-                            window.alert("Serial number cannot be negative");
-                            number = null;
-                        }
-                        if (isNaN(Number(number))) {
-                            window.alert("Serial number must be a number");
-                            number = null;
-                        }
-                    }
-
-                    if (number !== null && number !== "") {
-                        // Add new device to config
-                        setConfig({
-                            ...config,
-                            devices: [
-                                ...config.devices,
-                                {
-                                    serial_number: number,
-                                    config: device_baseline,
-                                },
-                            ],
-                        });
-                    }
-                }}
-            />
+                    }}
+                />
+                <input
+                    type="number"
+                    value={serial_number}
+                    onChange={(e) => set_serial_number(e.target.value)}
+                />
+            </div>
         </div>
     );
 }
