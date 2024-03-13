@@ -1,0 +1,46 @@
+.field_btn_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add_field_btn {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #59b254; /* GoBe green */
+    border: black 2px solid;
+    cursor: pointer;
+    border-radius: 30%;
+    margin-top: 10px;
+    font-size: 25px;
+}
+
+.tooltip_container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: top;
+    padding-left: calc(50% - ((35px) / 2));
+}
+.tooltip {
+    position: relative;
+    width: 100px;
+    top: 0;
+    padding: 4px;
+    border: 1px solid #000;
+    background-color: #f9f9f9;
+    font-size: 12px;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease-in-out;
+}
+.tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+}
