@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: left;
-    padding-left: 5px;
+    padding: 10px;
 }
 
 .add_field_btn {
