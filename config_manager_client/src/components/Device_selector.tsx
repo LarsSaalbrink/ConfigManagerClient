@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Device_data } from "./Device";
-import { config_context } from "../contexts/config_context";
+import { current_config_context } from "../contexts/config_context";
 import { current_device_context } from "../contexts/current_device_context";
 import { device_baseline } from "../configs/baseline_device";
 import styles from "./Device_selector.module.css";
@@ -13,7 +13,7 @@ export type Config = {
 
 export function Device_selector() {
     // Shared config state
-    const context = useContext(config_context);
+    const context = useContext(current_config_context);
     if (!context) {
         throw new Error(
             "useContext was used outside of the config_context provider"

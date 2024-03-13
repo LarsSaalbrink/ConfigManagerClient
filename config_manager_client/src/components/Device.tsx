@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styles from "./Device.module.css";
 import { configOptionsLUT } from "../configs/options_LUT";
 import { Trashbin } from "./Trashbin";
+import { current_device_context } from "../contexts/current_device_context";
+import { current_config_context } from "../contexts/config_context";
 
 export type Device_data = {
     serial_number: string;
@@ -22,6 +24,25 @@ export function Device({
     parent_handle_change_input,
     parent_handle_change_select,
 }: DeviceArgs) {
+    // Shared current device state
+    const device_context = useContext(current_device_context);
+    if (!device_context) {
+        throw new Error(
+            "useContext was used outside of the current_device_context provider"
+        );
+    }
+    const { current_device: _current_device, setCurrentDevice } =
+        device_context;
+
+    // Shared config state
+    const config_state_context = useContext(current_config_context);
+    if (!config_state_context) {
+        throw new Error(
+            "useContext was used outside of the config_context provider"
+        );
+    }
+    const { config: _config, setConfig } = config_state_context;
+
     const [formData, set_Device_data] = useState<Device_data>(device_json);
 
     const handle_change_input = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +66,7 @@ export function Device({
                 [e.target.name]: value,
             },
         });
-        parent_handle_change_input(e);
+        parent_handle_change_input(e); // TODO: Refactor this to use a context instead of calling parent
     };
 
     const handle_change_select = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -57,13 +78,22 @@ export function Device({
                 [e.target.name]: e.target.value,
             },
         });
-        parent_handle_change_select(e);
+        parent_handle_change_select(e); // TODO: Refactor this to use a context instead of calling parent
     };
 
     return (
         <div className={styles.device}>
             <div className={styles.delete_btn}>
-                {Trashbin(() => console.log("Trashbin clicked"))}
+                {Trashbin(() => {
+                    setCurrentDevice(null); // Unselect the current device
+                    // Delete it from the config
+                    const newConfig = { ..._config };
+                    newConfig.devices = newConfig.devices.filter(
+                        (device) =>
+                            device.serial_number !== formData.serial_number
+                    );
+                    setConfig(newConfig);
+                })}
             </div>
             <form>
                 {Object.keys(formData.config).map((field) => {

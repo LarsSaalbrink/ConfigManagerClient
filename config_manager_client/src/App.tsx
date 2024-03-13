@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Device, Device_data } from "./components/Device";
 import { Device_selector, Config } from "./components/Device_selector";
-import { config_context } from "./contexts/config_context";
+import { current_config_context } from "./contexts/config_context";
 import { current_device_context } from "./contexts/current_device_context";
 import styles from "./App.module.css";
 import default_config_json from "./assets/default_config.json";
@@ -79,7 +79,7 @@ function App() {
         <current_device_context.Provider
             value={{ current_device, setCurrentDevice }}
         >
-            <config_context.Provider value={{ config, setConfig }}>
+            <current_config_context.Provider value={{ config, setConfig }}>
                 <div className={styles.appContainer}>
                     <div className={styles.titleContainer}>
                         <div className={styles.title}>
@@ -108,7 +108,7 @@ function App() {
                         )}
                     </div>
                 </div>
-            </config_context.Provider>
+            </current_config_context.Provider>
         </current_device_context.Provider>
     );
 }
