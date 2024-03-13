@@ -1,14 +1,50 @@
 {
-    "name": "my-app",
+    "name": "configmanager",
     "private": true,
-    "version": "0.0.0",
+    "version": "1.0.0",
     "type": "module",
+    "main": "./build/electron/electron.js",
+    "homepage": "https://example.com",
+    "author": {
+        "name": "Lars Saalbrink",
+        "email": "larssaalbrink@gmail.com"
+    },
     "scripts": {
-        "dev": "vite",
-        "build": "tsc && vite build && node postbuild.js",
+        "dev": "vite --host 0.0.0.0 --port 3000",
+        "electron": "tsc && vite build && node postbuild.js && node prebuild_electron.js && electron .",
+        "build_web": "tsc && vite build && node postbuild.js",
+        "build_electron": "tsc && vite build && node postbuild.js && node prebuild_electron.js && electron-builder",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "test": "jest",
         "git_commit": "tsc && vite build && node postbuild.js && node git_commit.js"
+    },
+    "build": {
+        "appId": "GoBe_config_manager",
+        "productName": "Config_manager",
+        "directories": {
+            "output": "build/electron"
+        },
+        "files": [
+            "build/**/*"
+        ],
+        "linux": {
+            "target": [
+                "AppImage",
+                "deb"
+            ]
+        },
+        "win": {
+            "target": [
+                "nsis",
+                "zip"
+            ]
+        },
+        "mac": {
+            "target": [
+                "dmg",
+                "zip"
+            ]
+        }
     },
     "dependencies": {
         "react": "^18.2.0",
@@ -22,6 +58,8 @@
         "@typescript-eslint/eslint-plugin": "^7.0.2",
         "@typescript-eslint/parser": "^7.0.2",
         "@vitejs/plugin-react": "^4.2.1",
+        "electron": "^29.1.2",
+        "electron-builder": "^24.13.3",
         "eslint": "^8.56.0",
         "eslint-plugin-react": "^7.34.0",
         "eslint-plugin-react-hooks": "^4.6.0",
