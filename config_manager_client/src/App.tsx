@@ -17,7 +17,11 @@ function App() {
     useEffect(() => {
         //On load
         setConfig(default_config_json); // Placeholder for fileparser
-        add_field(config.devices[0], "boolean", "new_field");
+        add_field(config.devices[0], "selection", "testmode", [
+            "one",
+            "two",
+            "three",
+        ]);
     }, []);
 
     useEffect(() => {
@@ -45,15 +49,19 @@ function App() {
         if (device_index !== -1) {
             const device = newConfig.devices[device_index];
             if (device) {
-                if (type === "selection" && options) {
-                    device.config[field_name] = options[0];
-                    configOptionsLUT.set(field_name, options); // Add options to LUT
-                } else if (type === "numeric") {
-                    device.config[field_name] = 0;
-                } else if (type === "boolean") {
-                    device.config[field_name] = false;
+                if (device.config.hasOwnProperty(field_name)) {
+                    alert(`Field ${field_name} already exists`);
                 } else {
-                    alert("Invalid type for new field");
+                    if (type === "selection" && options) {
+                        device.config[field_name] = options[0];
+                        configOptionsLUT.set(field_name, options); // Add options to LUT
+                    } else if (type === "numeric") {
+                        device.config[field_name] = 0;
+                    } else if (type === "boolean") {
+                        device.config[field_name] = false;
+                    } else {
+                        alert("Invalid type for new field");
+                    }
                 }
             }
         } else {
