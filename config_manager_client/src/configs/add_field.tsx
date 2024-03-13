@@ -7,24 +7,11 @@ export const field_options = [
     },
     {
         tooltip: {
-            text: "lvl11_num11",
+            text: "True/False",
             children: [
                 {
                     tooltip: {
-                        text: "lvl2_num1",
-                        children: [
-                            {
-                                tooltip: {
-                                    text: "lvl3_num1",
-                                    children: [],
-                                },
-                            },
-                        ],
-                    },
-                },
-                {
-                    tooltip: {
-                        text: "lvl2_num2",
+                        text: "<div class='injected_html'>Name <input type=text style='width:50px'><button>Ok</button></div>",
                         children: [],
                     },
                 },
@@ -33,8 +20,28 @@ export const field_options = [
     },
     {
         tooltip: {
-            text: "lvl1_num2",
-            children: [],
+            text: "Numeric",
+            children: [
+                {
+                    tooltip: {
+                        text: "<div class='injected_html'>Name <input type=number style='width:50px'><button>Ok</button></div>",
+                        children: [],
+                    },
+                },
+            ],
+        },
+    },
+    {
+        tooltip: {
+            text: "Selection",
+            children: [
+                {
+                    tooltip: {
+                        text: "<div class='injected_html'>Name:a,b,c <input type=text style='width:50px'><button>Ok</button><br/></div>",
+                        children: [],
+                    },
+                },
+            ],
         },
     },
 ];

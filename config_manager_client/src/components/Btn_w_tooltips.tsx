@@ -27,7 +27,7 @@ const Tooltip: React.FC<TooltipProps & { visible: boolean }> = ({
     return (
         <div
             className={`${styles.tooltip} ${visible ? styles.visible : ""}`}
-            style={{ left: level === 0 ? "0px" : "104px" }}
+            style={{ left: level === 0 ? "0px" : "154px" }}
         >
             {" "}
             <div

@@ -25,11 +25,10 @@
     flex-direction: column;
     justify-content: top;
     align-items: top;
-    padding-left: calc(50% - ((35px) / 2));
 }
 .tooltip {
     position: relative;
-    width: 100px;
+    width: 150px;
     top: 0;
     height: 20px;
     padding: 4px;
