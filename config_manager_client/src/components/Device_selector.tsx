@@ -38,12 +38,10 @@ export function Device_selector() {
 
     // Function to handle selection menu button click
     const handleClick = (serialNumber: string) => {
-        console.log("App: handleClick");
         const device = config.devices.find(
             (device) => device.serial_number === serialNumber
         );
         if (device) {
-            console.log("Device found");
             setConfig(config);
             setCurrentDevice(device);
         } else {
@@ -80,7 +78,6 @@ export function Device_selector() {
                 value="-New-"
                 key="add_device"
                 onClick={() => {
-                    console.log("Add Device");
                     let number: any = null;
 
                     number = window.prompt("Serial number for new device");

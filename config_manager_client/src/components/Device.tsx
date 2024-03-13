@@ -48,8 +48,6 @@ export function Device({
     const [formData, set_Device_data] = useState<Device_data>(device_json);
 
     const handle_change_input = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("Device: handleFieldChange");
-
         let value: string | number | boolean = e.target.value;
 
         // Handle checkboxes
@@ -72,7 +70,6 @@ export function Device({
     };
 
     const handle_change_select = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log("Device: handleFieldChange");
         set_Device_data({
             ...formData,
             config: {

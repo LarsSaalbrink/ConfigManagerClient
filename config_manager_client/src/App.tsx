@@ -28,18 +28,13 @@ function App() {
     }, []);
 
     useEffect(() => {
-        console.log("current_device updated");
         (window as any).current_device = current_device; // Should be callable by JS inlined in HTML
     }, [current_device]);
 
-    useEffect(() => {
-        console.log("Config updated");
-    }, [config]);
+    useEffect(() => {}, [config]);
 
     // Update config from file
     const handle_file_change = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("App: handle_file_change");
-
         const file = e.target.files?.[0];
         if (file) {
             const reader = new FileReader();
@@ -60,8 +55,6 @@ function App() {
 
     // Export config to file
     const handle_export_config = () => {
-        console.log("App: handle_export_config");
-
         const data = JSON.stringify(config, null, 2);
         const blob = new Blob([data], { type: "application/json" });
         const url = URL.createObjectURL(blob);
@@ -79,8 +72,6 @@ function App() {
         field_name: string,
         options?: string[]
     ) => {
-        console.log("App: add_field");
-
         const newConfig = { ...config };
         const device_index = newConfig.devices.findIndex(
             (d) => d.serial_number === device.serial_number
@@ -115,8 +106,6 @@ function App() {
     (window as any).add_field = add_field; // Should be callable by JS inlined in HTML
 
     const handle_change_input = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("App: handleFieldChange");
-
         // Update the config with the new value
         const newConfig = { ...config };
         const device = newConfig.devices.find(
@@ -145,8 +134,6 @@ function App() {
     };
 
     const handle_change_select = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log("App: handleFieldChange");
-
         // Update the config with the new value
         const newConfig = { ...config };
         const device = newConfig.devices.find(
