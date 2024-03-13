@@ -10,7 +10,27 @@
     background-color: white;
 }
 
-.delete_btn {
+.device_field {
+    width: 100%;
+    height: 3vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+.device_field__del_btn {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+}
+
+.delete_device_btn {
     position: absolute;
     top: 0;
     right: 0%;

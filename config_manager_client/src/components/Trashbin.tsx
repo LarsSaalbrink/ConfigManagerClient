@@ -1,14 +1,20 @@
 import bin_icon from "../../public/trash_icon.png";
 import styles from "./Trashbin.module.css";
 
-export function Trashbin(input_func: () => void) {
+type TrashbinArgs = {
+    input_func: (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
+};
+export function Trashbin({ input_func }: TrashbinArgs) {
     return (
         <input
             type="image"
             src={bin_icon}
             alt="Trash bin"
             className={styles.trashbin_container}
-            onClick={input_func}
+            onClick={(event) => {
+                event.preventDefault();
+                input_func(event);
+            }}
         />
     );
 }

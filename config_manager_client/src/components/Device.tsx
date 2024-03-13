@@ -83,17 +83,20 @@ export function Device({
 
     return (
         <div className={styles.device}>
-            <div className={styles.delete_btn}>
-                {Trashbin(() => {
-                    setCurrentDevice(null); // Unselect the current device
-                    // Delete it from the config
-                    const newConfig = { ..._config };
-                    newConfig.devices = newConfig.devices.filter(
-                        (device) =>
-                            device.serial_number !== formData.serial_number
-                    );
-                    setConfig(newConfig);
-                })}
+            <div className={styles.delete_device_btn}>
+                <Trashbin
+                    input_func={() => {
+                        setCurrentDevice(null); // Unselect the current device
+                        // Delete it from the config
+                        const newConfig = { ..._config };
+                        newConfig.devices = newConfig.devices.filter(
+                            (device) =>
+                                device.serial_number !== formData.serial_number
+                        );
+                        setConfig(newConfig);
+                    }}
+                    key={formData.serial_number}
+                />
             </div>
             <form>
                 {Object.keys(formData.config).map((field) => {
@@ -107,7 +110,7 @@ export function Device({
                     }
 
                     return (
-                        <div key={field}>
+                        <div key={field} className={styles.device_field}>
                             <label>{field}</label>
                             {(() => {
                                 if (inputType === "checkbox") {
@@ -152,6 +155,28 @@ export function Device({
                                     );
                                 }
                             })()}
+
+                            <div className={styles.device_field__del_btn}>
+                                <Trashbin
+                                    input_func={() => {
+                                        const newConfig = { ..._config };
+                                        const device = newConfig.devices.find(
+                                            (device) =>
+                                                device.serial_number ===
+                                                formData.serial_number
+                                        );
+                                        if (device) {
+                                            delete device.config[field];
+                                            setConfig(newConfig);
+                                        } else {
+                                            console.error(
+                                                `Device with serial number ${formData.serial_number} not found`
+                                            );
+                                        }
+                                    }}
+                                    key={field}
+                                />
+                            </div>
                         </div>
                     );
                 })}
