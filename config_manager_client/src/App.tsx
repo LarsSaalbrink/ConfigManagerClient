@@ -24,8 +24,7 @@ function App() {
     );
 
     useEffect(() => {
-        //On load
-        setConfig(default_config_json); // Placeholder for fileparser
+        setConfig(default_config_json);
     }, []);
 
     useEffect(() => {
@@ -36,6 +35,42 @@ function App() {
     useEffect(() => {
         console.log("Config updated");
     }, [config]);
+
+    // Update config from file
+    const handle_file_change = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("App: handle_file_change");
+
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const content = e.target?.result;
+                if (content) {
+                    try {
+                        const newConfig = JSON.parse(content as string);
+                        setConfig(newConfig);
+                    } catch (e) {
+                        alert("Invalid JSON file");
+                    }
+                }
+            };
+            reader.readAsText(file);
+        }
+    };
+
+    // Export config to file
+    const handle_export_config = () => {
+        console.log("App: handle_export_config");
+
+        const data = JSON.stringify(config, null, 2);
+        const blob = new Blob([data], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "updated_config.json";
+        a.click();
+        URL.revokeObjectURL(url);
+    };
 
     // Add a new parameter to specified device
     const add_field = (
@@ -139,7 +174,21 @@ function App() {
                             <div className={styles.title}>
                                 <b>Config Manager</b>
                             </div>
-                            <div className={styles.serverpanel}></div>
+                            <div className={styles.filepanel}>
+                                <div className={styles.filebtn_container}>
+                                    <input
+                                        type="file"
+                                        onChange={handle_file_change}
+                                    />
+                                </div>
+                                <div className={styles.filebtn_container}>
+                                    <input
+                                        type="button"
+                                        value="Export Config"
+                                        onClick={handle_export_config}
+                                    />
+                                </div>
+                            </div>
                             <div className={styles.logobox}>
                                 <img src={logo}></img>
                             </div>

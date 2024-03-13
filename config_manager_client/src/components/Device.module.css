@@ -31,7 +31,7 @@
     cursor: pointer;
 }
 .device_field__del_btn_input {
-    width: 100px; /* Set the desired width */
+    width: 100px;
 }
 .delete_device_btn {
     position: absolute;
