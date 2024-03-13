@@ -15,7 +15,19 @@ let inlinedHtml = indexHtml;
 fs.readdirSync(assetsDir).forEach((file) => {
     const assetPath = `/assets/${file}`;
     const assetData = fs.readFileSync(path.join(assetsDir, file), "utf-8");
-    const assetDataUrl = `data:text/javascript;base64,${Buffer.from(
+
+    // Determine the MIME type based on the file extension
+    let mimeType;
+    if (file.endsWith(".js")) {
+        mimeType = "text/javascript";
+    } else if (file.endsWith(".css")) {
+        mimeType = "text/css";
+    } else {
+        // Skip this file if it's not JavaScript or CSS
+        return;
+    }
+
+    const assetDataUrl = `data:${mimeType};base64,${Buffer.from(
         assetData
     ).toString("base64")}`;
     inlinedHtml = inlinedHtml.replace(new RegExp(assetPath, "g"), assetDataUrl);
