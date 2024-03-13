@@ -2,12 +2,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: left;
+    padding-left: 5px;
 }
 
 .add_field_btn {
-    width: 35px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
     display: flex;
     justify-content: center;
     align-items: center;

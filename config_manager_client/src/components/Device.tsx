@@ -113,51 +113,6 @@ export function Device({
 
                     return (
                         <div key={field} className={styles.device_field}>
-                            <label>{field}</label>
-                            {(() => {
-                                if (inputType === "checkbox") {
-                                    return (
-                                        <input
-                                            type={inputType}
-                                            name={field}
-                                            checked={
-                                                formData.config[field] || false
-                                            }
-                                            onChange={handle_change_input}
-                                        />
-                                    );
-                                } else if (inputType === "number") {
-                                    return (
-                                        <input
-                                            type={inputType}
-                                            name={field}
-                                            value={formData.config[field] || ""}
-                                            onChange={handle_change_input}
-                                        />
-                                    );
-                                } else {
-                                    // Select input
-                                    return (
-                                        <select
-                                            name={field}
-                                            value={formData.config[field] || ""}
-                                            onChange={handle_change_select}
-                                        >
-                                            {configOptionsLUT
-                                                .get(field)
-                                                ?.map((option) => (
-                                                    <option
-                                                        key={option}
-                                                        value={option}
-                                                    >
-                                                        {option}
-                                                    </option>
-                                                ))}
-                                        </select>
-                                    );
-                                }
-                            })()}
-
                             <div className={styles.device_field__del_btn}>
                                 <Trashbin
                                     input_func={() => {
@@ -179,6 +134,59 @@ export function Device({
                                     key={field}
                                 />
                             </div>
+                            <label>{field}</label>
+                            {(() => {
+                                if (inputType === "checkbox") {
+                                    return (
+                                        <input
+                                            className={
+                                                styles.device_field__del_btn_input
+                                            }
+                                            type={inputType}
+                                            name={field}
+                                            checked={
+                                                formData.config[field] || false
+                                            }
+                                            onChange={handle_change_input}
+                                        />
+                                    );
+                                } else if (inputType === "number") {
+                                    return (
+                                        <input
+                                            className={
+                                                styles.device_field__del_btn_input
+                                            }
+                                            type={inputType}
+                                            name={field}
+                                            value={formData.config[field] || ""}
+                                            onChange={handle_change_input}
+                                        />
+                                    );
+                                } else {
+                                    // Select input
+                                    return (
+                                        <select
+                                            className={
+                                                styles.device_field__del_btn_input
+                                            }
+                                            name={field}
+                                            value={formData.config[field] || ""}
+                                            onChange={handle_change_select}
+                                        >
+                                            {configOptionsLUT
+                                                .get(field)
+                                                ?.map((option) => (
+                                                    <option
+                                                        key={option}
+                                                        value={option}
+                                                    >
+                                                        {option}
+                                                    </option>
+                                                ))}
+                                        </select>
+                                    );
+                                }
+                            })()}
                         </div>
                     );
                 })}
